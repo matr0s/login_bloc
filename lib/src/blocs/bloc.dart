@@ -28,4 +28,4 @@ class Bloc with Validators {
 
 // ********************************************
 // * Block instance init. We are using Single Instance Approach for this App
-final bloc = Bloc();
+// final bloc = Bloc();
