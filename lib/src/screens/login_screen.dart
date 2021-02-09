@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../blocs/bloc.dart';
+
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,25 +17,44 @@ class LoginScreen extends StatelessWidget {
         ));
   }
 
+// **********************************
+// * Widget for the email input
   Widget emailField() {
-    return TextField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        labelText: 'Email',
-        hintText: 'name@domain.com',
-      ),
+    return StreamBuilder(
+      stream: bloc.email,
+      builder: (ctx, snapshot) {
+        return TextField(
+          onChanged: bloc.changeEmail,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            labelText: 'Email',
+            hintText: 'name@domain.com',
+            errorText: snapshot.error,
+          ),
+        );
+      },
     );
   }
 
+// **********************************
+// * Widget for the password input
   Widget passwordField() {
-    return TextField(
-      obscureText: true,
-      decoration: InputDecoration(
-        labelText: 'Password',
-      ),
-    );
+    return StreamBuilder(
+        stream: bloc.password,
+        builder: (ctx, snapshot) {
+          return TextField(
+            onChanged: bloc.changePassword,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'Password',
+              errorText: snapshot.error,
+            ),
+          );
+        });
   }
 
+// **********************************
+// * Submit button we have to save all the data
   Widget submitButton() {
     return RaisedButton(
       color: Colors.blue,
