@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
             emailField(bloc),
             passwordField(bloc),
             Divider(height: 25.0),
-            submitButton(),
+            submitButton(bloc),
           ],
         ));
   }
@@ -58,11 +58,16 @@ class LoginScreen extends StatelessWidget {
 
 // **********************************
 // * Submit button we have to save all the data
-  Widget submitButton() {
-    return RaisedButton(
-      color: Colors.blue,
-      child: Text('LogIn'),
-      onPressed: () {},
+  Widget submitButton(Bloc bloc) {
+    return StreamBuilder(
+      stream: bloc.submitValid,
+      builder: (ctx, snapshot) {
+        return RaisedButton(
+          color: Colors.blue,
+          child: Text('LogIn'),
+          onPressed: snapshot.hasData ? bloc.submit : null,
+        );
+      },
     );
   }
 }
